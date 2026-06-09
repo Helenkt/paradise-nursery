@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, selectCartItems } from "./CartSlice.jsx";
+import { Link, NavLink } from "react-router-dom";
+import { addItem, selectCartCount, selectCartItems } from "./CartSlice.jsx";
 import plant1 from "./assets/plant-1.svg";
 import plant2 from "./assets/plant-2.svg";
 import plant3 from "./assets/plant-3.svg";
@@ -43,46 +44,69 @@ const plantsByCategory = [
   },
 ];
 
+function ProductListNavbar() {
+  const cartCount = useSelector(selectCartCount);
+
+  return (
+    <header className="navbar page-navbar">
+      <Link className="brand" to="/">
+        Paradise Nursery
+      </Link>
+      <nav className="nav-links">
+        <NavLink to="/">Home</NavLink>
+        <NavLink to="/plants">Plants</NavLink>
+        <NavLink to="/cart" className="cart-link" aria-label={`Cart with ${cartCount} items`}>
+          <span className="cart-icon" aria-hidden="true">Cart</span>
+          <span className="cart-count">{cartCount}</span>
+        </NavLink>
+      </nav>
+    </header>
+  );
+}
+
 function ProductList() {
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
   const addedPlantIds = new Set(cartItems.map((item) => item.id));
 
   return (
-    <section className="page-section">
-      <div className="section-heading">
-        <p className="eyebrow">Shop houseplants</p>
-        <h1>Plant Collection</h1>
-      </div>
+    <>
+      <ProductListNavbar />
+      <section className="page-section">
+        <div className="section-heading">
+          <p className="eyebrow">Shop houseplants</p>
+          <h1>Plant Collection</h1>
+        </div>
 
-      {plantsByCategory.map((group) => (
-        <section className="plant-category" key={group.category}>
-          <h2>{group.category}</h2>
-          <div className="product-grid">
-            {group.plants.map((plant) => {
-              const isAdded = addedPlantIds.has(plant.id);
-              return (
-                <article className="product-card" key={plant.id}>
-                  <img src={plant.image} alt={`${plant.name} thumbnail`} />
-                  <div>
-                    <h3>{plant.name}</h3>
-                    <p className="plant-price">${plant.price.toFixed(2)}</p>
-                  </div>
-                  <button
-                    type="button"
-                    className="add-cart-button"
-                    disabled={isAdded}
-                    onClick={() => dispatch(addToCart(plant))}
-                  >
-                    {isAdded ? "Added to Cart" : "Add to Cart"}
-                  </button>
-                </article>
-              );
-            })}
-          </div>
-        </section>
-      ))}
-    </section>
+        {plantsByCategory.map((group) => (
+          <section className="plant-category" key={group.category}>
+            <h2>{group.category}</h2>
+            <div className="product-grid">
+              {group.plants.map((plant) => {
+                const isAdded = addedPlantIds.has(plant.id);
+                return (
+                  <article className="product-card" key={plant.id}>
+                    <img src={plant.image} alt={`${plant.name} thumbnail`} />
+                    <div>
+                      <h3>{plant.name}</h3>
+                      <p className="plant-price">${plant.price.toFixed(2)}</p>
+                    </div>
+                    <button
+                      type="button"
+                      className="add-cart-button"
+                      disabled={isAdded}
+                      onClick={() => dispatch(addItem(plant))}
+                    >
+                      {isAdded ? "Added to Cart" : "Add to Cart"}
+                    </button>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+        ))}
+      </section>
+    </>
   );
 }
 

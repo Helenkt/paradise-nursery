@@ -4,15 +4,23 @@ function AboutUs() {
       <p className="eyebrow">About the company</p>
       <h1>About Paradise Nursery</h1>
       <p>
-        Paradise Nursery helps customers choose healthy indoor plants that fit their homes,
-        routines, and light conditions. We focus on practical plant care, reliable shipping,
-        and collections that make it easy to build a greener living space.
+        Paradise Nursery is a houseplant company that helps customers choose healthy indoor
+        plants that fit their homes, routines, and light conditions. Our mission is to connect
+        people with nature through carefully selected plants and practical plant-care support.
       </p>
       <p>
-        Our team curates pet-aware, air-friendly, flowering, and low-maintenance plants so
-        every shopper can find the right match. Each product includes clear pricing and a
-        simple shopping experience from browsing to checkout.
+        The company offers low-maintenance plants, air-purifying plants, statement plants,
+        and friendly guidance for new plant owners. Each product includes a thumbnail, plant
+        name, price, and a simple shopping experience from browsing to checkout.
       </p>
+      <div className="company-details">
+        <h2>Company Details</h2>
+        <ul>
+          <li>Company name: Paradise Nursery</li>
+          <li>Business focus: Online houseplant sales and plant-care guidance</li>
+          <li>Customer promise: Healthy plants, clear pricing, and reliable service</li>
+        </ul>
+      </div>
     </section>
   );
 }
