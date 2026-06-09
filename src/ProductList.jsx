@@ -12,34 +12,34 @@ const plantsByCategory = [
   {
     category: "Low Maintenance",
     plants: [
-      { id: "snake-plant", name: "Snake Plant", price: 18, image: plant1 },
-      { id: "zz-plant", name: "ZZ Plant", price: 22, image: plant2 },
-      { id: "pothos", name: "Golden Pothos", price: 16, image: plant3 },
-      { id: "rubber-plant", name: "Rubber Plant", price: 28, image: plant4 },
-      { id: "jade-plant", name: "Jade Plant", price: 19, image: plant5 },
-      { id: "cast-iron", name: "Cast Iron Plant", price: 25, image: plant6 },
+      { id: "snake-plant", name: "Snake Plant", price: 18, cost: 18, image: plant1, thumbnail: plant1 },
+      { id: "zz-plant", name: "ZZ Plant", price: 22, cost: 22, image: plant2, thumbnail: plant2 },
+      { id: "pothos", name: "Golden Pothos", price: 16, cost: 16, image: plant3, thumbnail: plant3 },
+      { id: "rubber-plant", name: "Rubber Plant", price: 28, cost: 28, image: plant4, thumbnail: plant4 },
+      { id: "jade-plant", name: "Jade Plant", price: 19, cost: 19, image: plant5, thumbnail: plant5 },
+      { id: "cast-iron", name: "Cast Iron Plant", price: 25, cost: 25, image: plant6, thumbnail: plant6 },
     ],
   },
   {
     category: "Air Purifying",
     plants: [
-      { id: "peace-lily", name: "Peace Lily", price: 24, image: plant2 },
-      { id: "areca-palm", name: "Areca Palm", price: 34, image: plant3 },
-      { id: "boston-fern", name: "Boston Fern", price: 20, image: plant4 },
-      { id: "aloe-vera", name: "Aloe Vera", price: 15, image: plant5 },
-      { id: "spider-plant", name: "Spider Plant", price: 17, image: plant6 },
-      { id: "english-ivy", name: "English Ivy", price: 21, image: plant1 },
+      { id: "peace-lily", name: "Peace Lily", price: 24, cost: 24, image: plant2, thumbnail: plant2 },
+      { id: "areca-palm", name: "Areca Palm", price: 34, cost: 34, image: plant3, thumbnail: plant3 },
+      { id: "boston-fern", name: "Boston Fern", price: 20, cost: 20, image: plant4, thumbnail: plant4 },
+      { id: "aloe-vera", name: "Aloe Vera", price: 15, cost: 15, image: plant5, thumbnail: plant5 },
+      { id: "spider-plant", name: "Spider Plant", price: 17, cost: 17, image: plant6, thumbnail: plant6 },
+      { id: "english-ivy", name: "English Ivy", price: 21, cost: 21, image: plant1, thumbnail: plant1 },
     ],
   },
   {
     category: "Statement Plants",
     plants: [
-      { id: "monstera", name: "Monstera Deliciosa", price: 38, image: plant3 },
-      { id: "fiddle-leaf", name: "Fiddle Leaf Fig", price: 45, image: plant4 },
-      { id: "bird-paradise", name: "Bird of Paradise", price: 48, image: plant5 },
-      { id: "calathea", name: "Calathea Orbifolia", price: 32, image: plant6 },
-      { id: "philodendron", name: "Philodendron Brasil", price: 27, image: plant1 },
-      { id: "majesty-palm", name: "Majesty Palm", price: 40, image: plant2 },
+      { id: "monstera", name: "Monstera Deliciosa", price: 38, cost: 38, image: plant3, thumbnail: plant3 },
+      { id: "fiddle-leaf", name: "Fiddle Leaf Fig", price: 45, cost: 45, image: plant4, thumbnail: plant4 },
+      { id: "bird-paradise", name: "Bird of Paradise", price: 48, cost: 48, image: plant5, thumbnail: plant5 },
+      { id: "calathea", name: "Calathea Orbifolia", price: 32, cost: 32, image: plant6, thumbnail: plant6 },
+      { id: "philodendron", name: "Philodendron Brasil", price: 27, cost: 27, image: plant1, thumbnail: plant1 },
+      { id: "majesty-palm", name: "Majesty Palm", price: 40, cost: 40, image: plant2, thumbnail: plant2 },
     ],
   },
 ];
@@ -86,10 +86,10 @@ function ProductList() {
                 const isAdded = addedPlantIds.has(plant.id);
                 return (
                   <article className="product-card" key={plant.id}>
-                    <img src={plant.image} alt={`${plant.name} thumbnail`} />
+                    <img src={plant.thumbnail} alt={`${plant.name} thumbnail`} />
                     <div>
                       <h3>{plant.name}</h3>
-                      <p className="plant-price">${plant.price.toFixed(2)}</p>
+                      <p className="plant-price">${plant.cost.toFixed(2)}</p>
                     </div>
                     <button
                       type="button"

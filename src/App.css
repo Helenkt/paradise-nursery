@@ -84,6 +84,15 @@ a {
   border-radius: 999px;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
 .landing-page {
   min-height: calc(100vh - 74px);
   display: grid;

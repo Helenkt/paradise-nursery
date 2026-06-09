@@ -33,6 +33,17 @@ function CartItem() {
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
   const totalAmount = useSelector(selectCartTotal);
+  const calculateTotalAmount = () =>
+    cartItems.reduce((total, item) => total + (item.cost ?? item.price) * item.quantity, 0);
+  const handleIncrement = (item) => {
+    dispatch(updateQuantity({ id: item.id, quantity: item.quantity + 1 }));
+  };
+  const handleDecrement = (item) => {
+    dispatch(updateQuantity({ id: item.id, quantity: item.quantity - 1 }));
+  };
+  const handleRemove = (id) => {
+    dispatch(removeItem(id));
+  };
 
   return (
     <>
@@ -54,33 +65,30 @@ function CartItem() {
           <>
             <div className="cart-summary">
               <span>Total Cart Amount</span>
-              <strong>${totalAmount.toFixed(2)}</strong>
+              <strong>${calculateTotalAmount().toFixed(2)}</strong>
+              <span className="sr-only">${totalAmount.toFixed(2)}</span>
             </div>
 
             <div className="cart-items">
               {cartItems.map((item) => (
                 <article className="cart-item" key={item.id}>
-                  <img src={item.image} alt={`${item.name} thumbnail`} />
+                  <img src={item.thumbnail} alt={`${item.name} thumbnail`} />
                   <div className="cart-item-details">
                     <h3>{item.name}</h3>
-                    <p>Unit Price: ${item.price.toFixed(2)}</p>
-                    <p>Total Cost: ${(item.price * item.quantity).toFixed(2)}</p>
+                    <p>Unit Price: ${(item.cost ?? item.price).toFixed(2)}</p>
+                    <p>Total Cost: ${((item.cost ?? item.price) * item.quantity).toFixed(2)}</p>
                   </div>
                   <div className="quantity-controls">
                     <button
                       type="button"
-                      onClick={() =>
-                        dispatch(updateQuantity({ id: item.id, quantity: item.quantity - 1 }))
-                      }
+                      onClick={() => handleDecrement(item)}
                     >
                       -
                     </button>
                     <span>{item.quantity}</span>
                     <button
                       type="button"
-                      onClick={() =>
-                        dispatch(updateQuantity({ id: item.id, quantity: item.quantity + 1 }))
-                      }
+                      onClick={() => handleIncrement(item)}
                     >
                       +
                     </button>
@@ -88,7 +96,7 @@ function CartItem() {
                   <button
                     type="button"
                     className="delete-button"
-                    onClick={() => dispatch(removeItem(item.id))}
+                    onClick={() => handleRemove(item.id)}
                   >
                     Delete
                   </button>
