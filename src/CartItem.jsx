@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   removeItem,
@@ -21,7 +22,8 @@ function CartNavbar() {
         <NavLink to="/">Home</NavLink>
         <NavLink to="/plants">Plants</NavLink>
         <NavLink to="/cart" className="cart-link" aria-label={`Cart with ${cartCount} items`}>
-          <span className="cart-icon" aria-hidden="true">Cart</span>
+          <span className="cart-icon" aria-hidden="true">&#128722;</span>
+          <span>Cart</span>
           <span className="cart-count">{cartCount}</span>
         </NavLink>
       </nav>
@@ -31,6 +33,7 @@ function CartNavbar() {
 
 function CartItem() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cartItems = useSelector(selectCartItems);
   const totalAmount = useSelector(selectCartTotal);
   const calculateTotalAmount = () =>
@@ -43,6 +46,12 @@ function CartItem() {
   };
   const handleRemove = (id) => {
     dispatch(removeItem(id));
+  };
+  const handleCheckoutShopping = () => {
+    alert("Coming Soon");
+  };
+  const handleContinueShopping = () => {
+    navigate("/plants");
   };
 
   return (
@@ -57,9 +66,9 @@ function CartItem() {
         {cartItems.length === 0 ? (
           <div className="empty-cart">
             <p>Your cart is empty.</p>
-            <Link className="primary-button" to="/plants">
-              Continue Shopping
-            </Link>
+              <Link className="primary-button" to="/plants" onClick={handleContinueShopping}>
+                Continue Shopping
+              </Link>
           </div>
         ) : (
           <>
@@ -105,10 +114,10 @@ function CartItem() {
             </div>
 
             <div className="cart-actions">
-              <button type="button" onClick={() => alert("Coming Soon")}>
+              <button type="button" onClick={handleCheckoutShopping}>
                 Checkout
               </button>
-              <Link className="secondary-button" to="/plants">
+              <Link className="secondary-button" to="/plants" onClick={handleContinueShopping}>
                 Continue Shopping
               </Link>
             </div>

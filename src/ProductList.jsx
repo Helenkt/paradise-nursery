@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import { addItem, selectCartCount, selectCartItems } from "./CartSlice.jsx";
@@ -56,7 +57,8 @@ function ProductListNavbar() {
         <NavLink to="/">Home</NavLink>
         <NavLink to="/plants">Plants</NavLink>
         <NavLink to="/cart" className="cart-link" aria-label={`Cart with ${cartCount} items`}>
-          <span className="cart-icon" aria-hidden="true">Cart</span>
+          <span className="cart-icon" aria-hidden="true">&#128722;</span>
+          <span>Cart</span>
           <span className="cart-count">{cartCount}</span>
         </NavLink>
       </nav>
@@ -67,7 +69,16 @@ function ProductListNavbar() {
 function ProductList() {
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
+  const [addedToCart, setAddedToCart] = useState({});
   const addedPlantIds = new Set(cartItems.map((item) => item.id));
+
+  const handleAddToCart = (plant) => {
+    dispatch(addItem(plant));
+    setAddedToCart((previousItems) => ({
+      ...previousItems,
+      [plant.id]: true,
+    }));
+  };
 
   return (
     <>
@@ -83,7 +94,7 @@ function ProductList() {
             <h2>{group.category}</h2>
             <div className="product-grid">
               {group.plants.map((plant) => {
-                const isAdded = addedPlantIds.has(plant.id);
+                const isAdded = addedToCart[plant.id] || addedPlantIds.has(plant.id);
                 return (
                   <article className="product-card" key={plant.id}>
                     <img src={plant.thumbnail} alt={`${plant.name} thumbnail`} />
@@ -95,7 +106,7 @@ function ProductList() {
                       type="button"
                       className="add-cart-button"
                       disabled={isAdded}
-                      onClick={() => dispatch(addItem(plant))}
+                      onClick={() => handleAddToCart(plant)}
                     >
                       {isAdded ? "Added to Cart" : "Add to Cart"}
                     </button>
